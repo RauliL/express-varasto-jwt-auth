@@ -1,0 +1,69 @@
+{
+  "name": "express-varasto-jwt-auth",
+  "version": "1.0.0",
+  "description": "JWT authentication for Express.js that uses Varasto storage",
+  "license": "MIT",
+  "author": "Rauli Laine <rauli.laine@iki.fi>",
+  "type": "module",
+  "main": "./dist/index.js",
+  "main:src": "./src/index.ts",
+  "types": "./dist/index.d.ts",
+  "keywords": [
+    "express",
+    "varasto",
+    "jwt",
+    "auth"
+  ],
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RauliL/express-varasto-jwt-auth.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RauliL/express-varasto-jwt-auth/issues"
+  },
+  "homepage": "https://github.com/RauliL/express-varasto-jwt-auth",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf './dist'",
+    "lint": "eslint",
+    "test": "vitest",
+    "style:check": "prettier --check .",
+    "style:fix": "prettier --write .",
+    "prebuild": "$npm_execpath run clean",
+    "prepack": "$npm_execpath run build"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "jose": "^6.2.12"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.3",
+    "@types/supertest": "^7.2.1",
+    "@varasto/memory-storage": "^4.0.0",
+    "@vitest/coverage-v8": "5.0.2",
+    "eslint": "^10.11.0",
+    "express": "^5.2.1",
+    "globals": "^17.12.0",
+    "jiti": "^2.7.0",
+    "prettier": "^3.9.9",
+    "rimraf": "^6.1.3",
+    "supertest": "^7.3.0",
+    "typescript": "^6.0.0",
+    "typescript-eslint": "^8.70.1",
+    "vite": "^8.3.1",
+    "vitest": "^5.0.2"
+  },
+  "peerDependencies": {
+    "@varasto/storage": "^6.0.0",
+    "express": "^5.0.0"
+  }
+}
