@@ -1,6 +1,6 @@
 {
   "name": "express-varasto-jwt-auth",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "JWT authentication for Express.js that uses Varasto storage",
   "license": "MIT",
   "author": "Rauli Laine <rauli.laine@iki.fi>",
