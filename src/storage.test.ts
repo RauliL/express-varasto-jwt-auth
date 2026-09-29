@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import {
   USERS_NAMESPACE,
   addUser,
+  changePassword,
   deleteUser,
   getUser,
   hasUsers,
@@ -160,6 +161,38 @@ describe("storage functions", () => {
 
       expect(users).toHaveLength(1);
       expect(users[0]).not.toHaveProperty("passwordHash");
+    });
+  });
+
+  describe("changePassword", () => {
+    it("updates the password hash so the new password works", async () => {
+      await addUser(storage, "alice", "password123");
+      const before = await getUser(storage, "alice");
+
+      await changePassword(storage, "alice", "new-password");
+
+      const after = await getUser(storage, "alice");
+
+      expect(after?.passwordHash).toEqual(expect.any(String));
+      expect(after?.passwordHash).not.toBe("new-password");
+      expect(after?.passwordHash).not.toBe(before?.passwordHash);
+      await expect(
+        login(storage, "alice", "password123"),
+      ).resolves.toBeUndefined();
+      await expect(login(storage, "alice", "new-password")).resolves.toEqual({
+        username: "alice",
+        isAdmin: false,
+        passwordHash: expect.any(String),
+      });
+    });
+
+    it("throws when the user does not exist", async () => {
+      await expect(
+        changePassword(storage, "missing", "password123"),
+      ).rejects.toThrow(UserNotFoundError);
+      await expect(
+        changePassword(storage, "missing", "password123"),
+      ).rejects.toThrow("User not found.");
     });
   });
 

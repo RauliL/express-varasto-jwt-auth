@@ -84,6 +84,25 @@ export const listUsers = async (storage: Storage): Promise<PublicUser[]> => {
   return users.sort((a, b) => a.username.localeCompare(b.username));
 };
 
+/**
+ * Attempts to change password for an user account in given storage.
+ */
+export const changePassword = async (
+  storage: Storage,
+  username: string,
+  newPassword: string,
+): Promise<void> => {
+  const user = await getUser(storage, username);
+
+  if (!user) {
+    throw new UserNotFoundError();
+  }
+
+  await storage.update<User>(USERS_NAMESPACE, username, {
+    passwordHash: await bcrypt.hash(newPassword, BCRYPT_ROUNDS),
+  });
+};
+
 const countAdminUsers = (storage: Storage): Promise<number> =>
   Array.fromAsync(
     storage.filter<User>(USERS_NAMESPACE, (user) => user.isAdmin),
