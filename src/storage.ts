@@ -40,7 +40,7 @@ export const addUser = async (
   username: string,
   password: string,
   isAdmin: boolean = false,
-): Promise<void> => {
+): Promise<PublicUser> => {
   if (!isValidUsername(username)) {
     throw new UserValidationError(
       "Username must be a valid slug (lowercase letters, numbers, and hyphens).",
@@ -56,6 +56,8 @@ export const addUser = async (
     username,
     passwordHash: await bcrypt.hash(password, BCRYPT_ROUNDS),
   });
+
+  return { isAdmin, username };
 };
 
 /**

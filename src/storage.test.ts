@@ -84,9 +84,9 @@ describe("storage functions", () => {
     });
 
     it("can create an administrator", async () => {
-      await addUser(storage, "admin", "password123", true);
-
-      await expect(getUser(storage, "admin")).resolves.toMatchObject({
+      await expect(
+        addUser(storage, "admin", "password123", true),
+      ).resolves.toMatchObject({
         username: "admin",
         isAdmin: true,
       });
